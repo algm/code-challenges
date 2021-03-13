@@ -21,16 +21,24 @@ describe('Supermarket (e2e)', () => {
       .expect(200)
       .expect({
         products: [
-          { sku: 'product-1', name: 'Soda can', price: 123 },
+          { sku: 'product-1', name: 'Soda can', price: 123, priceType: 'qty' },
           {
             sku: 'product-2',
             name: 'Potato bag',
             price: 75,
+            priceType: 'qty',
           },
           {
             sku: 'product-3',
             name: 'Sauce bucket',
             price: 50,
+            priceType: 'qty',
+          },
+          {
+            sku: 'product-4',
+            name: 'Orange',
+            price: 150,
+            priceType: 'weight',
           },
         ],
       });
@@ -45,6 +53,33 @@ describe('Supermarket (e2e)', () => {
         totalBeforeDiscounts: 246,
         discounts: 0,
         grandTotal: 246,
+      });
+  });
+
+  it('Stage 1', () => {
+    return request(app.getHttpServer())
+      .put('/basket')
+      .send([
+        { sku: 'product-1', quantity: 3 },
+        { sku: 'product-3', quantity: 15 },
+      ])
+      .expect(200)
+      .expect({
+        totalBeforeDiscounts: 1119,
+        discounts: 198,
+        grandTotal: 921,
+      });
+  });
+
+  it('Stage 2', () => {
+    return request(app.getHttpServer())
+      .put('/basket')
+      .send([{ sku: 'product-4', quantity: 3.5 }])
+      .expect(200)
+      .expect({
+        totalBeforeDiscounts: 525,
+        discounts: 0,
+        grandTotal: 525,
       });
   });
 });

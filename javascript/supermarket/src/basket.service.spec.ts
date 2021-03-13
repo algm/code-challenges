@@ -1,13 +1,20 @@
 import { ProductsService } from './products.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import { BasketService } from './basket.service';
+import { PromoService } from './promo/promo.service';
+import { PromoTypeFactory } from './promo/promoTypeFactory';
 
 describe('BasketService', () => {
   let service: BasketService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [BasketService, ProductsService],
+      providers: [
+        BasketService,
+        ProductsService,
+        PromoService,
+        PromoTypeFactory,
+      ],
     }).compile();
 
     service = module.get<BasketService>(BasketService);

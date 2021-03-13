@@ -14,16 +14,24 @@ describe('ProductsService', () => {
 
   it('should return all products', () => {
     expect(service.findAll()).toEqual([
-      { sku: 'product-1', name: 'Soda can', price: 123 },
+      { sku: 'product-1', name: 'Soda can', price: 123, priceType: 'qty' },
       {
         sku: 'product-2',
         name: 'Potato bag',
         price: 75,
+        priceType: 'qty',
       },
       {
         sku: 'product-3',
         name: 'Sauce bucket',
         price: 50,
+        priceType: 'qty',
+      },
+      {
+        sku: 'product-4',
+        name: 'Orange',
+        price: 150,
+        priceType: 'weight',
       },
     ]);
   });
@@ -33,6 +41,7 @@ describe('ProductsService', () => {
       sku: 'product-2',
       name: 'Potato bag',
       price: 75,
+      priceType: 'qty',
     });
   });
 });
